@@ -104,3 +104,25 @@ progresArea.addEventListener('click', event => {
     mainAudio.currentTime = (clikedOffSetX / progressWidthValue) * songDuration;
     playerMusic();
 });
+
+const repeaSongBtn = wrapper.querySelector('#repeat-plist');
+
+repeaSongBtn.addEventListener('click', () => {
+    let getText = repeaSongBtn.textContent;
+
+    switch (getText) {
+        case 'repeat':
+            repeaSongBtn.textContent = 'repeat_one';
+            repeaSongBtn.setAttribute('title', 'song looped');
+            break;
+        case 'repeat_one':
+            repeaSongBtn.textContent = 'shuffle';
+            repeaSongBtn.setAttribute('title', 'playback shuffle');
+            break;
+        case 'shuffle':
+            repeaSongBtn.textContent = 'repeat';
+            repeaSongBtn.setAttribute('title', 'playList looped')
+            break;
+    };
+
+});
