@@ -7,7 +7,8 @@ const wrapper = document.querySelector('.wrapper'),
     mainAudio = wrapper.querySelector('#main-audio'),
     playPauseBtn = wrapper.querySelector('.play-pause'),
     prevBtn = wrapper.querySelector('#prev'),
-    nextBtn = document.querySelector('#next');
+    nextBtn = wrapper.querySelector('#next'),
+    progresBar = wrapper.querySelector('.progress-bar');
 
 let indexMusic = 2;
 
@@ -42,11 +43,26 @@ playPauseBtn.addEventListener('click', () => {
 
 const nexMusic = () => {
     indexMusic++;
-    indexMusic > allMusic.length ? indexMusic = 1 : indexMusic = indexMusic;
+
+    indexMusic > allMusic.length
+        ? indexMusic = 1
+        : indexMusic = indexMusic;
+
     loadMuisic(indexMusic);
     playerMusic();
 };
 
-nextBtn.addEventListener('click', () => {
-    nexMusic();
-});
+nextBtn.addEventListener('click', () => nexMusic());
+
+const prevMusic = () => {
+    indexMusic--;
+
+    indexMusic < 1
+        ? indexMusic = allMusic.length
+        : indexMusic = indexMusic;
+
+    loadMuisic(indexMusic);
+    playerMusic();
+};
+
+prevBtn.addEventListener('click', () => prevMusic());
