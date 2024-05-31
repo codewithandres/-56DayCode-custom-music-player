@@ -20,7 +20,13 @@ const loadMuisic = indexNumb => {
     mainAudio.src = `songs/${src}.mp3`;
 };
 
-playPauseBtn.addEventListener('click', () => {
+const playerMusic = () => {
+    wrapper.classList.add('paused');
+    mainAudio.play();
+};
 
-    const isMusicPlayer = wrapper.classList.contains('paused');
+playPauseBtn.addEventListener('click', () => {
+    const isMusicPaused = wrapper.classList.contains('paused');
+
+    isMusicPaused ? pausedMusic() : playerMusic();
 });
