@@ -9,7 +9,10 @@ const wrapper = document.querySelector('.wrapper'),
     prevBtn = wrapper.querySelector('#prev'),
     nextBtn = wrapper.querySelector('#next'),
     progresBar = wrapper.querySelector('.progress-bar'),
-    progresArea = wrapper.querySelector('.progress-area');
+    progresArea = wrapper.querySelector('.progress-area'),
+    showMoreBtn = wrapper.querySelector('#more-music'),
+    hideMusicList = wrapper.querySelector('#close'),
+    muscList = wrapper.querySelector('.music-list');
 
 let indexMusic = 2;
 
@@ -150,4 +153,38 @@ mainAudio.addEventListener('ended', () => {
             playerMusic();
             break;
     };
+});
+
+showMoreBtn.addEventListener('click', () => muscList.classList.toggle('show'));
+
+hideMusicList.addEventListener('click', () => showMoreBtn.click());
+
+const ulTag = wrapper.querySelector('ul');
+
+allMusic.map(songs => {
+    let liTag = `
+        <li >
+            <div class="row">
+                <span>${songs.name}</span>
+                <p>${songs.artist}</p>
+            </div>
+            <span id="${songs.src}" class="audio-duration">3:40</span>
+            <audio class="${songs.src}" src="songs/${songs.src}.mp3"></audio>
+        </li>
+    `;
+    ulTag.insertAdjacentHTML("beforeend", liTag);
+
+    let liAdioTagDuration = ulTag.querySelector(`#${songs.src}`);
+    let liAudioTag = ulTag.querySelector(`.${songs.src}`);
+
+    liAudioTag.addEventListener('loadeddata', () => {
+
+        let audioDuration = liAudioTag.duration;
+        let totalMinutos = Math.floor(audioDuration / 60);
+        let totalSegundos = Math.floor(audioDuration % 60);
+
+        if (totalSegundos < 10) totalSegundos = `0${totalSegundos}`;
+
+        liAdioTagDuration.textContent = `${totalMinutos}:${totalSegundos}`;
+    });
 });
