@@ -39,3 +39,14 @@ playPauseBtn.addEventListener('click', () => {
 
     isMusicPaused ? pausedMusic() : playerMusic();
 });
+
+const nexMusic = () => {
+    indexMusic++;
+    indexMusic > allMusic.length ? indexMusic = 1 : indexMusic = indexMusic;
+    loadMuisic(indexMusic);
+    playerMusic();
+};
+
+nextBtn.addEventListener('click', () => {
+    nexMusic();
+});
