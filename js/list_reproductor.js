@@ -9,7 +9,7 @@
 
 //paste it inside the array as more as you want music then you don't need to do any other thing
 
-let allMusic = [
+export let allMusic = [
     {
         name: "Harley Bird - Home",
         artist: "Jordan Schor",
