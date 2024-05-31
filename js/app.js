@@ -16,7 +16,10 @@ const wrapper = document.querySelector('.wrapper'),
 
 let indexMusic = 2;
 
-window.addEventListener('DOMContentLoaded', () => loadMuisic(indexMusic));
+window.addEventListener('DOMContentLoaded', () => {
+    loadMuisic(indexMusic);
+    playinNow();
+});
 
 const loadMuisic = indexNumb => {
     const { name, artist, img, src } = allMusic[indexNumb - 1];
@@ -31,18 +34,21 @@ const playerMusic = () => {
     wrapper.classList.add('paused');
     playPauseBtn.querySelector('i').textContent = 'pause';
     mainAudio.play();
+    playinNow();
 };
 
 const pausedMusic = () => {
     wrapper.classList.remove('paused');
     playPauseBtn.querySelector('i').textContent = 'play_arrow';
     mainAudio.pause();
+    playinNow();
 };
 
 playPauseBtn.addEventListener('click', () => {
     const isMusicPaused = wrapper.classList.contains('paused');
 
     isMusicPaused ? pausedMusic() : playerMusic();
+    playinNow();
 });
 
 const nexMusic = () => {
@@ -151,6 +157,7 @@ mainAudio.addEventListener('ended', () => {
             indexMusic = ranIndex;
             loadMuisic(indexMusic);
             playerMusic();
+            playinNow();
             break;
     };
 });
@@ -163,7 +170,7 @@ const ulTag = wrapper.querySelector('ul');
 
 allMusic.map(songs => {
     let liTag = `
-        <li >
+        <li index='${songs.id}'>
             <div class="row">
                 <span>${songs.name}</span>
                 <p>${songs.artist}</p>
@@ -186,5 +193,34 @@ allMusic.map(songs => {
         if (totalSegundos < 10) totalSegundos = `0${totalSegundos}`;
 
         liAdioTagDuration.textContent = `${totalMinutos}:${totalSegundos}`;
+        liAdioTagDuration.setAttribute('t-duration', `${totalMinutos}:${totalSegundos}`)
     });
 });
+
+const allListTag = ulTag.querySelectorAll('li');
+
+const playinNow = () => {
+    allListTag.forEach(list => {
+        let audioTag = list.querySelector('.audio-duration');
+
+        if (list.classList.contains('playing')) {
+            list.classList.remove('playing');
+            let adDuration = audioTag.getAttribute('t-duration');
+            audioTag.textContent = adDuration;
+        };
+        if (list.getAttribute('index') == indexMusic) {
+            list.classList.add('playing')
+            audioTag.textContent = 'Playing';
+        };
+        list.addEventListener('click', () => clicked(list))
+    });
+};
+
+const clicked = (element) => {
+
+    let lineIndex = element.getAttribute('index');
+    indexMusic = lineIndex;
+    loadMuisic(indexMusic);
+    playerMusic();
+    playinNow();
+};
