@@ -5,7 +5,9 @@ const wrapper = document.querySelector('.wrapper'),
     musicName = wrapper.querySelector('.song-details .name'),
     musicArtist = wrapper.querySelector('.song-details .artist'),
     mainAudio = wrapper.querySelector('#main-audio'),
-    playPauseBtn = wrapper.querySelector('.play-pause');
+    playPauseBtn = wrapper.querySelector('.play-pause'),
+    prevBtn = wrapper.querySelector('#prev'),
+    nextBtn = document.querySelector('#next');
 
 let indexMusic = 2;
 
@@ -22,7 +24,14 @@ const loadMuisic = indexNumb => {
 
 const playerMusic = () => {
     wrapper.classList.add('paused');
+    playPauseBtn.querySelector('i').textContent = 'pause';
     mainAudio.play();
+};
+
+const pausedMusic = () => {
+    wrapper.classList.remove('paused');
+    playPauseBtn.querySelector('i').textContent = 'play_arrow';
+    mainAudio.pause();
 };
 
 playPauseBtn.addEventListener('click', () => {
