@@ -66,3 +66,31 @@ const prevMusic = () => {
 };
 
 prevBtn.addEventListener('click', () => prevMusic());
+
+mainAudio.addEventListener('timeupdate', event => {
+
+    const currentTime = event.target.currentTime;
+    const duration = event.target.duration;
+    let progresWidth = (currentTime / duration) * 100;
+    progresBar.style.width = `${progresWidth}%`;
+
+    let musicCurrentTime = wrapper.querySelector('.current-time');
+    let musciDuration = wrapper.querySelector('.max-duration');
+
+    mainAudio.addEventListener('loadeddata', () => {
+        let audioDuration = mainAudio.duration;
+        let totalMinutos = Math.floor(audioDuration / 60);
+        let totalSegundos = Math.floor(audioDuration % 60);
+
+        if (totalSegundos < 10) totalSegundos = `0${totalSegundos}`;
+
+        musciDuration.textContent = `${totalMinutos}:${totalSegundos}`;
+    });
+
+    let currentMinutos = Math.floor(currentTime / 60);
+    let currentSegundos = Math.floor(currentTime % 60);
+
+    if (currentSegundos < 10) currentSegundos = `0${currentSegundos}`;
+
+    musicCurrentTime.textContent = `${currentMinutos}:${currentSegundos}`;
+});
