@@ -124,5 +124,30 @@ repeaSongBtn.addEventListener('click', () => {
             repeaSongBtn.setAttribute('title', 'playList looped')
             break;
     };
+});
 
+mainAudio.addEventListener('ended', () => {
+    let getText = repeaSongBtn.textContent;
+
+    switch (getText) {
+        case 'repeat':
+            nexMusic();
+            break;
+        case 'repeat_one':
+            mainAudio.currentTime = 0;
+            loadMuisic(indexMusic);
+            playerMusic();
+            break;
+        case 'shuffle':
+            let ranIndex = Math.floor((Math.random() * allMusic.length) + 1);
+
+            do {
+                ranIndex = Math.floor((Math.random() * allMusic.length) + 1);
+            } while (indexMusic == ranIndex);
+
+            indexMusic = ranIndex;
+            loadMuisic(indexMusic);
+            playerMusic();
+            break;
+    };
 });
