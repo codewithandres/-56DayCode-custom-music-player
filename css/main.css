@@ -14,12 +14,12 @@
 }
 
 :root {
-    --pink: #ff74a4;
-    --violet: #9f6ea3;
+    --pink: hwb(246 5% 88%);
+    --violet: hwb(253 22% 69%);
     --lightblack: #515C6F;
-    --white: #ffffff;
+    --white: #a8adc2;
     --darkwhite: #cecaca;
-    --pinkshadow: #ffcbdd;
+    --pinkshadow: #9194b3;
     --lightbshadow: rgba(0, 0, 0, 0.15);
 }
 
