@@ -1,3 +1,5 @@
+![image](https://github.com/dizedesign/-56DayCode-custom-music-player/assets/141795901/e6e14112-1b7f-41e4-9c24-68e2c1ad751e)
+
 # 🎵 Reproductor de Música 🎵
 
 Este es un increíble reproductor de música construido con tecnologías web modernas.
