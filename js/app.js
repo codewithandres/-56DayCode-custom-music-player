@@ -1,5 +1,7 @@
+// Importamos la lista de música desde el archivo list_reproductor.js
 import { allMusic } from "./list_reproductor.js";
 
+// Seleccionamos los elementos del DOM que vamos a utilizar
 const wrapper = document.querySelector('.wrapper'),
     musicImg = wrapper.querySelector('.img-area img'),
     musicName = wrapper.querySelector('.song-details .name'),
@@ -14,13 +16,16 @@ const wrapper = document.querySelector('.wrapper'),
     hideMusicList = wrapper.querySelector('#close'),
     muscList = wrapper.querySelector('.music-list');
 
+// Definimos el índice de la canción que se va a cargar al inicio
 let indexMusic = 2;
 
+// Cuando el documento esté listo, cargamos la música y mostramos la canción que se está reproduciendo
 window.addEventListener('DOMContentLoaded', () => {
     loadMuisic(indexMusic);
     playinNow();
 });
 
+// Función para cargar la música en el reproductor
 const loadMuisic = indexNumb => {
     const { name, artist, img, src } = allMusic[indexNumb - 1];
 
@@ -30,6 +35,7 @@ const loadMuisic = indexNumb => {
     mainAudio.src = `songs/${src}.mp3`;
 };
 
+// Función para reproducir la música
 const playerMusic = () => {
     wrapper.classList.add('paused');
     playPauseBtn.querySelector('i').textContent = 'pause';
@@ -37,6 +43,7 @@ const playerMusic = () => {
     playinNow();
 };
 
+// Función para pausar la música
 const pausedMusic = () => {
     wrapper.classList.remove('paused');
     playPauseBtn.querySelector('i').textContent = 'play_arrow';
@@ -44,6 +51,7 @@ const pausedMusic = () => {
     playinNow();
 };
 
+// Evento para el botón de play/pausa
 playPauseBtn.addEventListener('click', () => {
     const isMusicPaused = wrapper.classList.contains('paused');
 
@@ -51,6 +59,7 @@ playPauseBtn.addEventListener('click', () => {
     playinNow();
 });
 
+// Función para pasar a la siguiente canción
 const nexMusic = () => {
     indexMusic++;
 
@@ -62,8 +71,10 @@ const nexMusic = () => {
     playerMusic();
 };
 
+// Evento para el botón de siguiente canción
 nextBtn.addEventListener('click', () => nexMusic());
 
+// Función para pasar a la canción anterior
 const prevMusic = () => {
     indexMusic--;
 
@@ -75,8 +86,10 @@ const prevMusic = () => {
     playerMusic();
 };
 
+// Evento para el botón de canción anterior
 prevBtn.addEventListener('click', () => prevMusic());
 
+// Evento para actualizar la barra de progreso de la canción
 mainAudio.addEventListener('timeupdate', event => {
 
     const currentTime = event.target.currentTime;
@@ -87,6 +100,7 @@ mainAudio.addEventListener('timeupdate', event => {
     let musicCurrentTime = wrapper.querySelector('.current-time');
     let musciDuration = wrapper.querySelector('.max-duration');
 
+    // Cuando los datos de la canción se hayan cargado, actualizamos la duración de la canción
     mainAudio.addEventListener('loadeddata', () => {
         let audioDuration = mainAudio.duration;
         let totalMinutos = Math.floor(audioDuration / 60);
@@ -105,6 +119,7 @@ mainAudio.addEventListener('timeupdate', event => {
     musicCurrentTime.textContent = `${currentMinutos}:${currentSegundos}`;
 });
 
+// Evento para cambiar la posición de la canción al hacer clic en la barra de progreso
 progresArea.addEventListener('click', event => {
     let progressWidthValue = progresArea.clientWidth;
     let clikedOffSetX = event.offsetX;
@@ -114,8 +129,10 @@ progresArea.addEventListener('click', event => {
     playerMusic();
 });
 
+// Botón para repetir la canción
 const repeaSongBtn = wrapper.querySelector('#repeat-plist');
 
+// Evento para cambiar el modo de repetición de la canción
 repeaSongBtn.addEventListener('click', () => {
     let getText = repeaSongBtn.textContent;
 
@@ -135,6 +152,7 @@ repeaSongBtn.addEventListener('click', () => {
     };
 });
 
+// Evento para cuando la canción termine
 mainAudio.addEventListener('ended', () => {
     let getText = repeaSongBtn.textContent;
 
@@ -162,12 +180,16 @@ mainAudio.addEventListener('ended', () => {
     };
 });
 
-showMoreBtn.addEventListener('click', () => muscList.classList.toggle('show'));
+// Evento para mostrar la lista de canciones
+showMoreBtn.addEventListener('click', () => muscList.classList.toggle('show'))
 
+// Evento para ocultar la lista de canciones
 hideMusicList.addEventListener('click', () => showMoreBtn.click());
 
+// Seleccionamos la lista de canciones
 const ulTag = wrapper.querySelector('ul');
 
+// Recorremos todas las canciones y las añadimos a la lista
 allMusic.map(songs => {
     let liTag = `
         <li index='${songs.id}'>
@@ -184,6 +206,7 @@ allMusic.map(songs => {
     let liAdioTagDuration = ulTag.querySelector(`#${songs.src}`);
     let liAudioTag = ulTag.querySelector(`.${songs.src}`);
 
+    // Cuando los datos de la canción se hayan cargado, actualizamos la duración de la canción en la lista
     liAudioTag.addEventListener('loadeddata', () => {
 
         let audioDuration = liAudioTag.duration;
@@ -197,8 +220,10 @@ allMusic.map(songs => {
     });
 });
 
+// Seleccionamos todas las canciones de la lista
 const allListTag = ulTag.querySelectorAll('li');
 
+// Función para mostrar la canción que se está reproduciendo en la lista
 const playinNow = () => {
     allListTag.forEach(list => {
         let audioTag = list.querySelector('.audio-duration');
@@ -216,6 +241,7 @@ const playinNow = () => {
     });
 };
 
+// Función para cuando se hace clic en una canción de la lista
 const clicked = (element) => {
 
     let lineIndex = element.getAttribute('index');
